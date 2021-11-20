@@ -19,7 +19,9 @@ def respond(sender_id: str, message: dict):
         "recipient": {"id": sender_id},
         "message": message
     }
-    requests.post(FB_SEND_API_URL, json=response_body, params={"access_token": FB_PAGE_ACCESS_TOKEN})
+    error = requests.post(FB_SEND_API_URL, json=response_body, params={"access_token": FB_PAGE_ACCESS_TOKEN})
+    if error.status_code != 200:
+        print(error.json())
 
 
 @messenger.route("/messenger/", methods=["POST"])
