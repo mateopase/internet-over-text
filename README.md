@@ -1,2 +1,2 @@
-# reddit-sms
-Browsing reddit over SMS
+# internet-over-test
+Browsing the internet usingg text based messaging services
