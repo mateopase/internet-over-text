@@ -1,6 +1,6 @@
 from web.handlers import handle
 
-from flask import Flask, request
+from flask import Flask, request, Response
 from twilio.twiml.messaging_response import MessagingResponse
 
 
@@ -22,7 +22,7 @@ def sms():
     content = handle(body)
     response = MessagingResponse().message(content)
 
-    return str(response)
+    return Response(str(response), mimetype='text/xml')
 
 
 @app.route("/fb/reply/", methods=["POST"])
