@@ -21,12 +21,12 @@ def sms():
     body = request.values.get("Body", None)
     content = handle(body)
 
-    response = MessagingResponse().message(body=content)
-    # message = Message()
-    # message.body(content)
-    # response.append(message)
+    response = MessagingResponse()
+    message = Message()
+    message.body(content)
+    response.append(message)
 
-    return str(response)# Response(str(response), mimetype='text/xml')
+    return Response(str(response), mimetype='text/xml')
 
 
 @app.route("/fb/reply/", methods=["POST"])
