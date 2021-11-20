@@ -1,3 +1,4 @@
+from web.auth import twilio_auth
 from web.handlers import handle
 
 from flask import Flask, request, Response
@@ -17,6 +18,7 @@ Can we navigate via SMS in situations w/ poor signal?
 
 
 @app.route("/sms/reply/", methods=["POST"])
+@twilio_auth
 def sms():
     body = request.values.get("Body", None)
     content = handle(body)
@@ -29,6 +31,6 @@ def sms():
     return Response(str(response), mimetype='text/xml')
 
 
-@app.route("/fb/reply/", methods=["POST"])
+# @app.route("/fb/reply/", methods=["POST"])
 def messenger():
     return {"message": "Hello, world!"}
