@@ -21,4 +21,4 @@ class Reddit(Provider):
 
     def get_post(self, subreddit: str, post: int) -> str:
         posts = self.reddit.subreddit(subreddit).hot(limit=10)
-        return list(posts)[post].selftext
+        return list(posts)[post - 1].selftext

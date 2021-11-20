@@ -16,7 +16,8 @@ def sms_reply():
 
     response = MessagingResponse()
     message = Message()
-    message.body(content)
+    # Truncate message due to SMS limits
+    message.body(content[:1599])
     response.append(message)
 
     return Response(str(response), mimetype='text/xml')
