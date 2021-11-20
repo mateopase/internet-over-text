@@ -1,8 +1,8 @@
-from web.api.auth import facebook_auth, twilio_auth
-from web.handlers import handle
-
 from flask import Blueprint, request, Response
 from twilio.twiml.messaging_response import MessagingResponse, Message
+
+from web.api.auth import facebook_auth, twilio_auth
+from web.handlers import handle
 
 
 sms = Blueprint("sms", __name__)
@@ -16,8 +16,10 @@ def sms_reply():
 
     response = MessagingResponse()
     message = Message()
+
     # Truncate message due to SMS limits
     message.body(content[:1599])
+
     response.append(message)
 
     return Response(str(response), mimetype='text/xml')
