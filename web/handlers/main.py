@@ -25,7 +25,7 @@ def handle_reddit(arguments: list) -> str:
     if len(arguments) == 1:
         return reddit.get_subreddit(arguments[0])
     else:
-        return reddit.get_post(arguments[0], arguments[1])
+        return reddit.get_post(arguments[0], int(arguments[1]))
 
 
 def handle_twitter(arguments: list) -> str:
