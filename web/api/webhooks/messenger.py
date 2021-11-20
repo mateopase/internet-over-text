@@ -12,7 +12,7 @@ FB_VERIFY_TOKEN = os.environ.get("FB_VERIFY_TOKEN")
 @messenger.route("/messenger/", methods=["POST"])
 @facebook_auth
 def messenger_reply():
-    logging.debug(request.json)
+    print(request.json)
     return {"message": "Hello, world!"}
 
 
