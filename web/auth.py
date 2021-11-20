@@ -14,7 +14,9 @@ def twilio_auth(route):
 
     @wraps(route)
     def decorated_route(*args, **kwargs):
-        if not validator.validate(request.url, request.form, request.headers.get('X-Twilio-Signature')):
+        twilio_sig = request.headers.get(key='X-Twilio-Signature', default='')
+
+        if not validator.validate(request.url, request.form, twilio_sig):
             abort(401)
 
         return route(*args, **kwargs)
