@@ -4,6 +4,7 @@ from flask import abort, Blueprint, request
 import requests
 
 from web.api.auth import facebook_auth
+from web.handlers import handle
 
 
 messenger = Blueprint("facebook", __name__)
@@ -24,10 +25,12 @@ def respond(sender_id: str, message: dict):
 @messenger.route("/messenger/", methods=["POST"])
 @facebook_auth
 def messenger_reply():
-    response = {"text": "hey there"}
+    message = request.json["entry"][0]["messaging"][0]["message"]["text"]
     sender_id = request.json["entry"][0]["messaging"][0]["sender"]["id"]
 
-    # respond(sender_id, response)
+    content = {"text": handle(message)}
+    respond(sender_id, content)
+
     return {}
 
 
