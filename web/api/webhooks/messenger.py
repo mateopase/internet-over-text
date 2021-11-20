@@ -39,7 +39,7 @@ def messenger_reply():
 
     response = handle(text)
     if len(response.message) > 2000:
-        messages = textwrap.wrap(response.message)
+        messages = textwrap.wrap(response.message, 2000)
         for m in messages[0:-1]:
             content = {"text": m}
             respond(sender_id, content)
