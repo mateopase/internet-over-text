@@ -14,7 +14,7 @@ def twilio_auth(route):
 
     @wraps(route)
     def decorated_route(*args, **kwargs):
-        twilio_sig = request.headers.get(key='X-Twilio-Signature', default='')
+        twilio_sig = request.headers.get(key="X-Twilio-Signature", default="")
 
         if not validator.validate(request.url, request.form, twilio_sig):
             abort(401)
@@ -31,6 +31,11 @@ def facebook_auth(route):
 
     @wraps(route)
     def decorated_route(*args, **kwargs):
+        hub_signature = request.headers.get(key="X-Hub-Signature", default="")
+
+        if not hub_signature:
+            abort(401)
+
         return route(*args, **kwargs)
 
     return decorated_route
