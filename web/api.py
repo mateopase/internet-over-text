@@ -1,7 +1,7 @@
 from web.handlers import handle
 
 from flask import Flask, request, Response
-from twilio.twiml.messaging_response import MessagingResponse
+from twilio.twiml.messaging_response import MessagingResponse, Message
 
 
 app = Flask(__name__)
@@ -20,11 +20,15 @@ Can we navigate via SMS in situations w/ poor signal?
 def sms():
     body = request.values.get("Body", None)
     content = handle(body)
-    response = MessagingResponse().message(content)
+
+    response = MessagingResponse()
+    message = Message()
+    message.body(content)
+    response.append(message)
 
     return Response(str(response), mimetype='text/xml')
 
 
 @app.route("/fb/reply/", methods=["POST"])
-def facebook_messenger():
+def messenger():
     return {"message": "Hello, world!"}
