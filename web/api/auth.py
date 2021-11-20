@@ -1,11 +1,14 @@
 import os
+import hmac
+import hashlib
 from functools import wraps
 
 from flask import abort, request
 from twilio.request_validator import RequestValidator
 
 
-validator = RequestValidator(os.environ.get('TWILIO_AUTH_TOKEN'))
+validator = RequestValidator(os.environ.get("TWILIO_AUTH_TOKEN"))
+FB_APP_SECRET = os.environ.get("FB_APP_SECRET")
 
 def twilio_auth(route):
     """
@@ -31,9 +34,18 @@ def facebook_auth(route):
 
     @wraps(route)
     def decorated_route(*args, **kwargs):
-        hub_signature = request.headers.get(key="X-Hub-Signature", default="")
+        # Get sig from request
+        request_sig = request.headers.get(key="X-Hub-Signature", default="").removeprefix("sha1=")
 
-        if not hub_signature:
+        # Calculate signature request should have
+        expected_sig = hmac.new(
+            FB_APP_SECRET,
+            request.body,
+            hashlib.sha1
+        ).hexdigest()
+
+        # Check that request signature matches expected
+        if not hmac.compare_digest(expected_sig, request_sig):
             abort(401)
 
         return route(*args, **kwargs)

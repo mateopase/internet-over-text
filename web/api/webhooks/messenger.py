@@ -1,6 +1,7 @@
-import os, logging
+import os
 
 from flask import abort, Blueprint, request
+import requests
 
 from web.api.auth import facebook_auth
 
@@ -9,11 +10,15 @@ messenger = Blueprint("facebook", __name__)
 FB_VERIFY_TOKEN = os.environ.get("FB_VERIFY_TOKEN")
 
 
+def respond(message: dict):
+    pass
+
+
 @messenger.route("/messenger/", methods=["POST"])
 @facebook_auth
 def messenger_reply():
-    print(request.json)
-    return {"message": "Hello, world!"}
+    respond(request.json)
+    return {}
 
 
 @messenger.route("/messenger/", methods=["GET"])
