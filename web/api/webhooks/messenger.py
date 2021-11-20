@@ -27,10 +27,15 @@ def respond(sender_id: str, message: dict):
 @messenger.route("/messenger/", methods=["POST"])
 @facebook_auth
 def messenger_reply():
-    message = request.json["entry"][0]["messaging"][0]["message"]["text"]
+    message = request.json["entry"][0]["messaging"][0]["message"]
+    if "quick_reply" in message:
+        text = message["quick_reply"]["payload"]
+    else:
+        text = message["text"]
     sender_id = request.json["entry"][0]["messaging"][0]["sender"]["id"]
 
-    content = {"text": handle(message)}
+    response = handle(message)
+    content = {"text": response.message, "quick_replies": response.buttons}
     respond(sender_id, content)
 
     return {}

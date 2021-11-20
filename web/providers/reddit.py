@@ -16,8 +16,7 @@ class Reddit(Provider):
 
     def get_subreddit(self, subreddit: str) -> str:
         posts = self.reddit.subreddit(subreddit).hot(limit=10)
-        titles = [f"[{num}] {post.title} | {post.subreddit.display_name}" for num, post in enumerate(posts, start=1)]
-        return "\n".join(titles)
+        return posts
 
     def get_post(self, subreddit: str, post: int) -> str:
         posts = self.reddit.subreddit(subreddit).hot(limit=10)

@@ -12,7 +12,7 @@ sms = Blueprint("sms", __name__)
 @twilio_auth
 def sms_reply():
     body = request.values.get("Body", None)
-    content = handle(body)
+    content = handle(body).message
 
     response = MessagingResponse()
     message = Message()
@@ -21,5 +21,6 @@ def sms_reply():
     message.body(content[:1599])
 
     response.append(message)
+    # TODO: Respond by calling twilio API instad of responding to webhook
 
     return Response(str(response), mimetype='text/xml')
