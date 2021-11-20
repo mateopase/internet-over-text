@@ -16,7 +16,7 @@ Can we navigate via SMS in situations w/ poor signal?
 """
 
 
-@app.route("/sms/reply", methods=["POST"])
+@app.route("/sms/reply/", methods=["POST"])
 def sms():
     body = request.values.get("Body", None)
     content = handle(body)
@@ -25,6 +25,6 @@ def sms():
     return str(response)
 
 
-@app.route("/fb/reply", methods=["POST"])
+@app.route("/fb/reply/", methods=["POST"])
 def facebook_messenger():
     return {"message": "Hello, world!"}
