@@ -1,4 +1,6 @@
 import os
+import textwrap
+import time
 
 from flask import abort, Blueprint, request
 import requests
@@ -13,7 +15,7 @@ FB_VERIFY_TOKEN = os.environ.get("FB_VERIFY_TOKEN")
 FB_PAGE_ACCESS_TOKEN = os.environ.get("FB_PAGE_ACCESS_TOKEN")
 FB_SEND_API_URL = "https://graph.facebook.com/v12.0/me/messages"
 
-
+# TODO Put this somewhere else
 def respond(sender_id: str, message: dict):
     response_body = {
         "recipient": {"id": sender_id},
@@ -24,6 +26,7 @@ def respond(sender_id: str, message: dict):
         print(error.json())
 
 
+# TODO Clean this whole thing up, add wrap and button support globally, and nerf SMS
 @messenger.route("/messenger/", methods=["POST"])
 @facebook_auth
 def messenger_reply():
@@ -35,8 +38,17 @@ def messenger_reply():
     sender_id = request.json["entry"][0]["messaging"][0]["sender"]["id"]
 
     response = handle(text)
-    content = {"text": response.message, "quick_replies": response.buttons}
-    respond(sender_id, content)
+    if len(response.message) > 2000:
+        messages = textwrap.wrap(response.message)
+        for m in messages[0:-1]:
+            content = {"text": m}
+            respond(sender_id, content)
+            time.sleep(0.2)
+        content = {"text": messages[-1], "quick_replies": response.buttons}
+        respond(sender_id, content)
+    else:
+        content = {"text": response.message, "quick_replies": response.buttons}
+        respond(sender_id, content)
 
     return {}
 
