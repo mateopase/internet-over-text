@@ -39,8 +39,8 @@ def facebook_auth(route):
 
         # Calculate signature request should have
         expected_sig = hmac.new(
-            FB_APP_SECRET,
-            request.body,
+            bytes(FB_APP_SECRET, "utf-8"),
+            request.get_data(),
             hashlib.sha1
         ).hexdigest()
 
