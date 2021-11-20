@@ -8,7 +8,7 @@ from .manual import MANUAL
 @dataclass
 class HandlerResponse:
     message: str
-    buttons: object
+    buttons: object = None
 
 
 def handle(message: str) -> HandlerResponse:

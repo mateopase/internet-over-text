@@ -34,7 +34,7 @@ def messenger_reply():
         text = message["text"]
     sender_id = request.json["entry"][0]["messaging"][0]["sender"]["id"]
 
-    response = handle(message)
+    response = handle(text)
     content = {"text": response.message, "quick_replies": response.buttons}
     respond(sender_id, content)
 
