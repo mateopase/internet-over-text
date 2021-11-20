@@ -1,3 +1,5 @@
+from web.handlers import handle
+
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 
@@ -10,16 +12,16 @@ Various webhook endpoints to handle communication methods.
 SMS -> Twilio
 Messenger -> Facebook
 WhatsApp? What else?
+Can we navigate via SMS in situations w/ poor signal?
 """
 
 
 @app.route("/sms/reply", methods=["POST"])
 def sms():
     body = request.values.get("Body", None)
+    content = handle(body)
+    response = MessagingResponse().message(content)
 
-
-
-    response = MessagingResponse().message()
     return str(response)
 
 
