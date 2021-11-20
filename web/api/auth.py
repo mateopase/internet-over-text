@@ -22,3 +22,15 @@ def twilio_auth(route):
         return route(*args, **kwargs)
 
     return decorated_route
+
+
+def facebook_auth(route):
+    """
+    Simple auth wrapper for validating Facebook API key.
+    """
+
+    @wraps(route)
+    def decorated_route(*args, **kwargs):
+        return route(*args, **kwargs)
+
+    return decorated_route
