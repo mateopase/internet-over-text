@@ -1,0 +1,8 @@
+import os
+
+
+REDDIT_CLIENT_ID = os.environ.get("REDDIT_CLIENT_ID")
+REDDIT_CLIENT_SECRET = os.environ.get("REDDIT_CLIENT_SECRET")
+FB_PAGE_ACCESS_TOKEN = os.environ.get("FB_PAGE_ACCESS_TOKEN")
+FB_VERIFY_TOKEN = os.environ.get("FB_VERIFY_TOKEN")
+FB_APP_SECRET = os.environ.get("FB_APP_SECRET")
