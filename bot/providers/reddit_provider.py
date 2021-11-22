@@ -54,4 +54,4 @@ class Reddit:
 
         comment_page = post.comments[comment_limit - 10: comments_to_load]
 
-        return Page(comment_page, post.num_comments > comment_limit)
+        return Page(comment_page, post.num_comments > comment_limit and bool(comment_page))

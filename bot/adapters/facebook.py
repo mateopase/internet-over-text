@@ -21,6 +21,10 @@ class Facebook:
     def reply(self, sender_id: str, body: str, buttons: list[dict]):
         messages = textwrap.wrap(body, MAX_MESSAGE_LEN)
 
+        # Handle empty messages
+        if not messages:
+            return
+
         for message in messages[0:-1]:
             content = {"text": message}
             self._send_reply(sender_id, content)

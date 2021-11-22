@@ -29,14 +29,16 @@ def build_subreddit_reply(sub: str, page: int, sort: str, time: str) -> tuple[st
         f"{post.title} | {post.subreddit.display_name}\nV: {post.score}, C: {post.num_comments}"
         for post in posts.items
     ]
-    return "\n\n".join(display_names), None
+    response = "\n\n".join(display_names)
+    return response or f"No more posts on /r/{sub}", None
 
 
 def build_post_reply(post_id: str) -> tuple[str, list[dict]]:
     post = reddit.get_post(post_id)
-    return post.selftext, None
+    return post.selftext or "No post body or this is an image post :'(", None
 
 
 def build_comment_reply(post_id: str, page: int, sort: str) -> tuple[str, list[dict]]:
     comments = reddit.get_post_comments(post_id, page, sort)
-    return "\n\n".join([comment.body for comment in comments.items]), None
+    response = "\n\n".join([comment.body for comment in comments.items])
+    return response or "No more comments :'(", None
