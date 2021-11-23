@@ -13,7 +13,7 @@ def reply(sender_id: str, message: str):
         args = message.split(" ")
         command = parser.parse_args(args)
     except: 
-        response = parser.format_help()
+        response = [parser.format_help()]
 
 
     if command:
