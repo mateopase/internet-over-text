@@ -27,7 +27,7 @@ def facebook_auth(route):
 
         # Check that request signature matches expected
         if not hmac.compare_digest(expected_sig, request_sig):
-            pass#abort(401)
+            abort(401)
 
         return route(*args, **kwargs)
 
