@@ -18,14 +18,24 @@ class Facebook:
 
         self.session.params = {"access_token": FB_PAGE_ACCESS_TOKEN}
 
-    def reply(self, sender_id: str, body: str, buttons: list[dict]):
+    def reply(self, sender_id: str, bodies: list[str], buttons: list[dict]):
+        if not bodies:
+            return
+
+        for body in bodies[:-1]:
+            self._safe_send_reply(sender_id, body)
+
+        self._safe_send_reply(sender_id, bodies[-1], buttons)
+
+
+    def _safe_send_reply(self, sender_id: str, body: str, buttons: list[dict] = None):
         messages = textwrap.wrap(body, MAX_MESSAGE_LEN)
 
         # Handle empty messages
         if not messages:
             return
 
-        for message in messages[0:-1]:
+        for message in messages[:-1]:
             content = {"text": message}
             self._send_reply(sender_id, content)
             time.sleep(MESSAGE_DELAY)
@@ -35,7 +45,6 @@ class Facebook:
             "quick_replies": buttons
         }
         self._send_reply(sender_id, content)
-
 
     def _send_reply(self, sender_id: str, message: dict):
         response_body = {
