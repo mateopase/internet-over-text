@@ -19,6 +19,8 @@ def reply(sender_id: str, message: str):
     if command:
         if command.site == "reddit":
             response, buttons = build_reddit_reply(command)
+            if not response and not buttons:
+                response = [parser.format_help()]
 
     facebook.reply(sender_id, response, buttons)
 

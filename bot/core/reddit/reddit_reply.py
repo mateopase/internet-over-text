@@ -21,6 +21,8 @@ def build_reddit_reply(command: Namespace) -> tuple[str, list[dict]]:
         return build_post_reply(command.post_id)
     elif command.content == "comments":
         return build_comment_reply(command.post_id, command.page, command.sort)
+    else:
+        return None, None
 
 
 def build_subreddit_reply(sub: str, page: int, sort: str, time: str) -> tuple[list[str], list[dict]]:
