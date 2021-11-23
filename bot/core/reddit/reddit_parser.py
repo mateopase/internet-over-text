@@ -6,7 +6,7 @@ def add_reddit_parser(subparser: ArgumentParser):
     reddit_subparsers = reddit_parser.add_subparsers(help='Type of content', dest="content")
 
     subreddit_parser = reddit_subparsers.add_parser("subreddit")
-    subreddit_parser.add_argument("subreddit", type=str, default="front")
+    subreddit_parser.add_argument("subreddit", type=str, default="frontpage")
     subreddit_parser.add_argument("-s", "--sort", type=str, default="hot", choices=["hot", "new", "top"])
     subreddit_parser.add_argument("-t", "--time", type=str, default="day", choices=["hour", "day", "week", "month", "year", "all"])
     subreddit_parser.add_argument("-p", "--page", type=int, default=1)

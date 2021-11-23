@@ -21,7 +21,7 @@ class Reddit:
     )
 
     def _get_subreddit(self, subreddit: str):
-        if subreddit == "front":
+        if subreddit == "front" or subreddit == "frontpage":
             return self.reddit.front
         else:
             sub = self.reddit.subreddit(subreddit)
