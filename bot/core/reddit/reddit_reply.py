@@ -39,7 +39,7 @@ def build_subreddit_reply(sub: str, page: int, sort: str, time: str) -> tuple[li
         buttons = [
             {
                 "content_type": "text",
-                "title": f"{post.title[:17]}...",
+                "title": post.title,
                 "payload": f"reddit post {post.id}",
             } 
         for post in posts.items]
@@ -70,7 +70,7 @@ def build_post_reply(post_id: str) -> tuple[list[str], list[dict]]:
         buttons = [
             {
                 "content_type": "text",
-                "title": f"Back to posts (by hot)",
+                "title": f"Back to posts (hot)",
                 "payload": f"reddit subreddit {post.subreddit.display_name}",
             },
             {
@@ -102,14 +102,14 @@ def build_comment_reply(post_id: str, page: int, sort: str) -> tuple[list[str], 
         if page != 1:
             buttons += [{
                 "content_type": "text",
-                "title": "Previous Page",
+                "title": "Previous page",
                 "payload": f"reddit comments {post_id} -p {page} -s {sort}",
             }]
         if post_comments.has_more:
             next_page = page + 1
             buttons += [{
                 "content_type": "text",
-                "title": "Next Page",
+                "title": "Next page",
                 "payload": f"reddit comments {post_id} -p {next_page} -s {sort}",
             }]
         return messages, buttons
